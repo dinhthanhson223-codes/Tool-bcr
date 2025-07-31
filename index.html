@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Soi Cầu Baccarat</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        h1 { text-align: center; }
+        .btn-group { text-align: center; margin-bottom: 20px; }
+        button { padding: 10px 20px; margin: 5px; font-size: 16px; }
+        .history { background: white; padding: 15px; border-radius: 8px; max-width: 400px; margin: auto; }
+        .entry { display: inline-block; margin: 4px; padding: 6px 12px; border-radius: 4px; font-weight: bold; }
+        .B { background-color: #e74c3c; color: white; }
+        .P { background-color: #3498db; color: white; }
+        .T { background-color: #2ecc71; color: white; }
+        #clearBtn { margin-top: 20px; background-color: #999; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Soi Cầu Baccarat</h1>
+    <div class="btn-group">
+        <button onclick="addResult('B')">Banker (B)</button>
+        <button onclick="addResult('P')">Player (P)</button>
+        <button onclick="addResult('T')">Tie (T)</button>
+    </div>
+    <div class="history" id="history"></div>
+    <div style="text-align:center;">
+        <button id="clearBtn" onclick="clearHistory()">Xóa lịch sử</button>
+    </div>
+
+    <script>
+        let history = JSON.parse(localStorage.getItem("baccaratHistory")) || [];
+
+        function saveHistory() {
+            localStorage.setItem("baccaratHistory", JSON.stringify(history));
+        }
+
+        function renderHistory() {
+            const container = document.getElementById("history");
+            container.innerHTML = "";
+            history.forEach(item => {
+                const span = document.createElement("span");
+                span.textContent = item;
+                span.className = "entry " + item;
+                container.appendChild(span);
+            });
+        }
+
+        function addResult(result) {
+            history.push(result);
+            saveHistory();
+            renderHistory();
+        }
+
+        function clearHistory() {
+            if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+                history = [];
+                saveHistory();
+                renderHistory();
+            }
+        }
+
+        renderHistory();
+    </script>
+</body>
+</html>
